@@ -2,3 +2,118 @@
 
 /* Tycoon HD: crisp artwork with small cached textures; no live blur filters. */
 #overlay{backdrop-filter:none}main{border-color:#345e69;background:#dbe4d4}#quest-card{box-shadow:0 5px 12px #26395022;border-color:#e1d3af}#controls{box-shadow:0 3px 8px #26395016}.hero-art{background:linear-gradient(145deg,#e4eddb,#c8dfcc);object-fit:contain}#quest-route{color:#3d827b;font-weight:700}
+
+/* v1.2 — Antarmuka sentuh responsif; fitur PC, quest, dan data tetap sama. */
+#quest-toggle{display:none}
+#joystick,#joystick-ring,#joystick-knob{border-radius:50%}
+#touch{user-select:none;-webkit-user-select:none}
+#touch button,#joystick{touch-action:none;-webkit-tap-highlight-color:transparent}
+#touch button{font-family:inherit}
+#game canvas{touch-action:none}
+
+@media (pointer:coarse) and (max-width:1100px){
+ html,body{width:100%;height:100%;overscroll-behavior:none}
+ body{overflow:hidden}
+ #app{width:100%;height:100vh;height:100dvh;min-height:0;padding:0 5px 4px;overflow:hidden}
+ header{min-height:55px;height:55px;flex:0 0 55px;padding:5px 4px;gap:7px}
+ .brand{gap:4px;font-size:9px;letter-spacing:.5px;min-width:0;line-height:1.05}
+ .brand-bottom{font-size:14px}.brand-icon,.brand i{display:none}
+ #hud{min-width:0;gap:6px;padding-left:7px;font-size:11px}
+ #day{font-size:11px}#rank{display:none}
+ .cash{margin-left:auto;min-width:0}.cash small{font-size:7px;letter-spacing:0;white-space:nowrap}.cash b{font-size:13px;line-height:1.25;white-space:nowrap}
+ nav{gap:4px}nav button{min-height:38px;padding:5px 7px;font-size:12px}#sound{min-width:35px}
+ main{min-height:0;flex:1 1 auto;border:3px solid #345e69;border-radius:11px;overflow:hidden;isolation:isolate}
+ #game{position:absolute;inset:0;width:100%;height:100%}
+ #quest-card{top:9px;right:9px;width:min(235px,66%);padding:8px 35px 8px 10px;border:1px solid #d6c29b;border-radius:10px;max-height:48%;overflow:auto;box-shadow:0 3px 8px #1f343a25;z-index:4}
+ #quest-card h2{font-size:13px;line-height:1.19;margin:3px 0 0;overflow-wrap:anywhere}
+ #quest-card .eyebrow{font-size:8px;letter-spacing:.6px;display:block;line-height:1.25}
+ #quest-card p{font-size:11px;margin:7px 0}
+ #quest-card button#journal{min-height:37px;font-size:12px}
+ #quest-toggle{display:grid;place-items:center;position:absolute;right:5px;top:5px;width:30px;height:32px;min-height:32px;padding:0;background:#e6efe1;border-color:#c9d8c3;font-size:20px;line-height:1}
+ #quest-card.collapsed #quest-detail{display:none}
+ #zone,#controls,#interaction{display:none}
+ #touch{position:absolute;left:0;right:0;bottom:12px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 10px;gap:4px;z-index:5;pointer-events:none}
+ #joystick-area,#touch-actions{pointer-events:auto}
+ #joystick-area{width:128px;display:flex;flex-direction:column;align-items:center;flex:0 0 128px}
+ #joystick{width:122px;height:122px;display:grid;place-items:center;position:relative;cursor:grab;touch-action:none}
+ #joystick-ring{width:122px;height:122px;position:absolute;inset:0;border:3px solid #fff9ebd9;background:radial-gradient(circle,#ffffff45 0 24%,#215b65a6 25% 100%);box-shadow:inset 0 0 0 8px #ffffff15,0 3px 12px #112d3590}
+ #joystick-ring:before,#joystick-ring:after{content:'';position:absolute;background:#fff9eb73;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+ #joystick-ring:before{width:2px;height:78%}#joystick-ring:after{height:2px;width:78%}
+ #joystick-knob{position:relative;z-index:2;width:55px;height:55px;border:3px solid #fff9eb;box-shadow:0 3px 7px #142c3599,inset 0 3px 3px #ffffff54;background:linear-gradient(135deg,#7cd6c3,#2f989b);will-change:transform;pointer-events:none}
+ .touch-caption{font-weight:800;color:#fffdf4;letter-spacing:.5px;font-size:9px;line-height:1.2;text-shadow:0 2px 4px #14353b,0 0 4px #14353b;margin-top:5px;white-space:nowrap}
+ #touch-actions{width:min(195px,54vw);display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:0}
+ #touch-e{display:flex;align-items:center;justify-content:center;flex-direction:column;width:85px;min-height:85px;border-radius:50%;background:linear-gradient(160deg,#ffd88d,#eaa453);border:4px solid #fff5d6;box-shadow:0 5px 0 #88542d,0 7px 12px #1c35436b;color:#584022;font-size:13px;line-height:1.08;padding:5px;margin-right:6px;text-shadow:0 1px 0 #fff6d7;touch-action:manipulation;transition:transform .09s ease}
+ #touch-e:active{transform:translateY(4px);box-shadow:0 1px 0 #88542d}
+ #touch-e.nearby{background:linear-gradient(160deg,#fff0a4,#ffbd55);box-shadow:0 5px 0 #88542d,0 0 0 5px #ffe28855}
+ #touch-e .action-symbol{font-size:22px;line-height:1.2}#touch-e strong{font-size:14px;letter-spacing:.6px}
+ #touch-target{font-size:8px;font-weight:800;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ #touch-shortcuts{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+ #touch-shortcuts button{min-width:0;min-height:49px;padding:4px 1px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;background:#fff9ebec;border:1px solid #d2c6a9;box-shadow:0 3px 0 #23444b70;font-size:17px;line-height:1.15;border-radius:8px}
+ #touch-shortcuts button span{font-size:9px;font-weight:800}
+ #touch-shortcuts button:active{transform:translateY(2px);box-shadow:0 1px 0 #23444b70}
+ footer{padding:3px 3px 0;line-height:1.2;font-size:9px;flex:0 0 19px;max-height:19px}footer span:first-child{display:none}
+ #save-status{font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #toast{top:75px;width:min(285px,83%);text-align:center;font-size:11px;z-index:6;pointer-events:none;padding:8px 10px}
+ #overlay{padding:12px max(8px,env(safe-area-inset-right)) 12px max(8px,env(safe-area-inset-left));align-items:center}
+ #panel{max-width:560px;max-height:calc(100dvh - 24px);padding:28px 16px 20px;border-width:2px;border-radius:13px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ #panel h1{font-size:clamp(22px,6.4vw,30px);line-height:1.15;letter-spacing:-.5px}
+ #panel h2{font-size:17px}#panel p{font-size:13px;line-height:1.5}
+ #panel .intro-title{font-size:clamp(28px,8.3vw,42px);line-height:1.05}
+ .intro-grid{grid-template-columns:minmax(0,1fr) 87px;gap:10px}
+ .hero-art{width:87px;height:115px;border-width:4px}
+ .badges{flex-wrap:wrap;gap:4px}.badges span{font-size:10px;padding:3px 6px}
+ #panel .actions{gap:7px;margin-top:14px}#panel .actions button{min-width:min(115px,100%);padding:10px 8px;min-height:46px;font-size:13px}
+ #panel input,#panel select{font-size:16px;min-height:45px}
+ .fields{grid-template-columns:1fr;gap:9px}.workpaper{padding:11px;margin:10px 0}
+ .row{gap:7px;overflow-wrap:anywhere}.row span,.row b{min-width:0}
+ .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:9px}.metric b{font-size:14px;overflow-wrap:anywhere}
+ .table-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .dialogue{gap:10px}.portrait{width:52px;height:80px}.choice-row button{min-height:43px}
+ .certificate{padding:10px}.certificate h1{font-size:24px}.certificate .name{font-size:20px}
+ body:has(#overlay:not([hidden])) #touch{visibility:hidden}
+}
+@media (pointer:coarse) and (max-width:1100px) and (orientation:landscape) and (max-height:550px){
+ header{min-height:42px;height:42px;flex-basis:42px}footer{display:none}
+ #touch{bottom:6px;padding:0 9px}
+ #joystick-area{width:100px;flex-basis:100px}#joystick,#joystick-ring{width:92px;height:92px}
+ #joystick-knob{width:45px;height:45px}.touch-caption{font-size:8px;margin-top:2px}
+ #touch-actions{width:200px;gap:5px}#touch-e{width:66px;min-height:66px;border-width:3px}#touch-e .action-symbol{font-size:17px}#touch-e strong{font-size:12px}#touch-target{font-size:7px}
+ #touch-shortcuts button{min-height:43px;font-size:14px}
+ #quest-card{top:5px;right:6px;width:min(200px,37%)}
+ #panel{max-height:calc(100dvh - 12px);padding:15px 18px}
+}
+@media (pointer:coarse) and (max-width:350px){
+ .brand{font-size:8px}.brand-bottom{font-size:12px}#hud{padding-left:5px}
+ nav button{font-size:10px;padding:4px 5px}#sound{min-width:30px}
+ #joystick-area{width:108px;flex-basis:108px}#joystick,#joystick-ring{width:107px;height:107px}#joystick-knob{width:48px;height:48px}
+ #touch-actions{width:166px}#touch-shortcuts button span{font-size:8px}
+}
+@media (hover:hover) and (pointer:fine){#touch{display:none}}
+/* Prioritas selector: tombol ringkas misi tidak menimpa judul kartu. */
+@media (pointer:coarse) and (max-width:1100px){
+ #quest-card #quest-toggle{width:30px;height:32px;min-height:32px;padding:0;font-size:20px}
+ #joystick-knob{position:absolute;left:50%;top:50%;translate:-50% -50%}
+}
+
+/* Area aman untuk HP berponi dan gestur navigasi iPhone. */
+@media (pointer:coarse) and (max-width:1100px){
+ #app{padding-top:env(safe-area-inset-top);padding-bottom:max(4px,env(safe-area-inset-bottom))}
+ #touch{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+}
+@media print{html,body{height:auto!important;overflow:visible!important}#print-area{display:block!important}}
+
+/* v1.3.0: Fullscreen landscape diminta setelah ketukan pengguna (bukan rotasi CSS palsu). */
+:root:fullscreen { background:#e6e3d5; }
+:root:fullscreen #app {max-width:none; width:100%; height:100dvh; }
+#rotate-hint[hidden]{display:none!important}
+#rotate-hint{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#142d38eF;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));color:#263950}
+.rotate-panel{width:min(420px,100%);max-height:92dvh;overflow:auto;text-align:center;background:var(--cream);border:3px solid #d4ba8a;border-radius:17px;padding:20px;box-shadow:0 10px 35px #0006}
+.rotate-panel h2{font-size:clamp(19px,5vw,26px);margin:6px 0}
+.rotate-panel p{font-size:14px;line-height:1.45;margin:8px auto 16px}
+.rotate-phone{font-size:64px;line-height:1.15;color:var(--teal);font-weight:bold}.rotate-phone span{font-size:38px;color:var(--gold)}
+.rotate-actions{display:flex;flex-wrap:wrap;gap:9px}.rotate-actions button{flex:1;min-width:128px;min-height:46px;padding:9px 6px}
+@media (pointer:coarse) and (max-width:1100px) and (orientation:landscape) and (max-height:550px){
+ :root:fullscreen #app{padding-top:max(1px,env(safe-area-inset-top));padding-bottom:max(1px,env(safe-area-inset-bottom))}
+ :root:fullscreen header{min-height:38px;height:38px;flex-basis:38px}
+ :root:fullscreen #touch{bottom:4px}
+}

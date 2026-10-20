@@ -1,5 +1,30 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#235A63"><meta name="description" content="Petualangan sekretaris: jelajahi Kantor Pelangi dan selesaikan 20 misi akuntansi."><title>Secretary Quest — Kantor Pelangi</title><link rel="icon" href="assets/icon.svg"><link rel="stylesheet" href="style.css"></head><body>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#235A63"><meta name="description" content="Petualangan sekretaris: jelajahi Kantor Pelangi dan selesaikan 20 misi akuntansi."><title>Secretary Quest — Kantor Pelangi</title><link rel="icon" href="assets/icon.svg"><link rel="stylesheet" href="style.css?v=1.3.0"></head><body>
 <div id="app"><header><a class="brand" href="#" aria-label="Menu utama"><span class="brand-icon">▦</span><span>SECRETARY<span class="brand-bottom">QUEST <i>OFFICE ADVENTURE</i></span></span></a><div id="hud"><span id="day">HARI 1 <small>/ 5</small></span><span id="rank">Anak Magang<progress id="xp" max="200" value="0"></progress></span><span class="cash"><small>KAS PERUSAHAAN</small><b id="cash">Rp0</b></span></div><nav><button id="sound" title="Suara">♪</button><button id="menu">☰ Menu</button></nav></header>
-<main><div id="game" aria-label="Dunia kantor. Gunakan WASD atau panah untuk bergerak."></div><aside id="quest-card"><span class="eyebrow" id="quest-day">PESAN DARI PAK BUDI</span><h2 id="quest-title">Selamat datang!</h2><p id="quest-place">Mulai petualanganmu di Kantor Pelangi.</p><p id="quest-route" class="route"></p><button id="journal">Buku misi <kbd>J</kbd></button></aside><div id="zone">KANTOR PELANGI <span>• Lobi</span></div><div id="interaction" hidden></div><div id="toast" role="status" hidden></div><div id="controls"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Jalan</span><span><kbd>E</kbd> Interaksi</span><button id="map">Peta <kbd>M</kbd></button><button id="book">Catatan</button><button id="zoom" title="Ubah ukuran tampilan kantor">Zoom 150%</button></div><div id="touch"><button data-dir="up">↑</button><button data-dir="left">←</button><button data-dir="down">↓</button><button data-dir="right">→</button><button id="touch-e">E</button></div></main><footer><span>✦ Belajar dari setiap langkah.</span><span id="save-status">Single-player · Simpan di perangkat ini</span></footer></div>
+<main><div id="game" aria-label="Dunia kantor. Gunakan WASD atau panah untuk bergerak."></div><aside id="quest-card" class="collapsed"><button type="button" id="quest-toggle" aria-label="Perluas detail misi" aria-controls="quest-detail" aria-expanded="false">▾</button><span class="eyebrow" id="quest-day">PESAN DARI PAK BUDI</span><h2 id="quest-title">Selamat datang!</h2><div id="quest-detail"><p id="quest-place">Mulai petualanganmu di Kantor Pelangi.</p><p id="quest-route" class="route"></p><button id="journal">Buku misi <kbd>J</kbd></button></div></aside><div id="zone">KANTOR PELANGI <span>• Lobi</span></div><div id="interaction" hidden></div><div id="toast" role="status" hidden></div><div id="controls"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Jalan</span><span><kbd>E</kbd> Interaksi</span><button id="map">Peta <kbd>M</kbd></button><button id="book">Catatan</button><button id="zoom" title="Ubah ukuran tampilan kantor">Zoom 150%</button></div><div id="touch" aria-label="Kontrol permainan layar sentuh">
+  <div id="joystick-area">
+    <div id="joystick" aria-label="Analog berjalan: sentuh dan geser ke arah tujuan" role="group"><div id="joystick-ring"><div id="joystick-knob"></div></div></div>
+    <span class="touch-caption">GESER UNTUK JALAN</span>
+  </div>
+  <div id="touch-actions">
+    <button type="button" id="touch-e" aria-label="Interaksi dengan objek terdekat"><span class="action-symbol">✦</span><strong>AKSI</strong><span id="touch-target">Interaksi</span></button>
+    <div id="touch-shortcuts">
+      <button type="button" id="touch-map" aria-label="Buka peta kantor">▦ <span>Peta</span></button>
+      <button type="button" id="touch-journal" aria-label="Buka buku misi">☷ <span>Misi</span></button>
+      <button type="button" id="touch-notes" aria-label="Buka catatan keuangan">▤ <span>Kas</span></button>
+      <button type="button" id="touch-zoom" aria-label="Ubah zoom kamera">⌕ <span>Zoom</span></button>
+    </div>
+  </div>
+</div></main><footer><span>✦ Belajar dari setiap langkah.</span><span id="save-status">Single-player · Simpan di perangkat ini</span></footer></div>
+<section id="rotate-hint" role="dialog" aria-modal="true" aria-labelledby="rotate-title" hidden>
+  <div class="rotate-panel">
+    <div class="rotate-phone" aria-hidden="true">▯ <span>↻</span></div>
+    <h2 id="rotate-title">Putar HP ke samping</h2>
+    <p>Game lebih luas dalam tampilan <strong>landscape</strong>. Browser HP ini belum bisa memutar layar otomatis. Matikan kunci rotasi HP bila perlu.</p>
+    <div class="rotate-actions">
+      <button type="button" id="rotate-retry" class="primary">⛶ Coba landscape</button>
+      <button type="button" id="rotate-skip">Tetap main portrait</button>
+    </div>
+  </div>
+</section>
 <div id="overlay" hidden><section id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title"><button id="close" aria-label="Tutup panel">×</button><div id="panel-content"></div></section></div><div id="print-area"></div>
-<script src="vendor/phaser-3.90.0.min.js"></script><script type="module" src="src/main.js"></script></body></html>
+<script src="vendor/phaser-3.90.0.min.js"></script><script type="module" src="src/main.js?v=1.3.0"></script></body></html>

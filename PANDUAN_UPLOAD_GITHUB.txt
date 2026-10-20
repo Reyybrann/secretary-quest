@@ -1,0 +1,34 @@
+SECRETARY QUEST v1.3 — LANDSCAPE HP + PC
+
+ZIP INI SIAP UNTUK GITHUB PAGES (isi file pada akar ZIP)
+
+LANGKAH UPDATE GITHUB:
+1. Cadangkan save jika sudah bermain: di game, Menu > Panduan & pengaturan > Ekspor Save.
+2. Ekstrak ZIP ini ke sebuah folder di komputer.
+3. Buka repository GitHub sekretaris yang SUDAH ADA (mis. reyybrann/secretary-quest).
+4. Pilih Add file > Upload files.
+5. Pilih / seret SEMUA FILE DAN FOLDER HASIL EKSTRAKSI (index.html, style.css,
+   src, assets, vendor, .nojekyll). Upload ke ROOT repository, bukan subfolder.
+6. Jangan unggah file ZIP sebagai satu file; jangan biarkan index.html masuk
+   subfolder baru. Jika GitHub meminta update file yang sudah ada, commit
+   perubahan tersebut pada branch yang dipakai GitHub Pages.
+7. Tunggu deployment Pages selesai dan akses link situs yang sama.
+8. Jika masih muncul versi lama, reload dengan alamat yang sama ditambah
+   ?v=130 di akhir. Contoh: https://reyybrann.github.io/secretary-quest/?v=130
+
+HP: Tekan Ayo masuk kantor / Lanjutkan untuk mencoba landscape layar penuh.
+Jika browser tidak mengizinkan rotasi, putar HP manual atau pilih Tetap main portrait.
+Menu > Panduan & pengaturan memiliki Mode landscape dan Keluar layar penuh.
+
+HP: analog kiri untuk gerak, tombol AKSI kanan untuk interaksi; di kanan bawah
+ada tombol Peta, Misi, Kas, Zoom. Panah di kartu misi untuk memperluas petunjuk.
+PC: WASD/panah jalan, E/Spasi interaksi, M peta, J misi.
+
+Isi 20 quest, sistem uang/stok, autosave, dekorasi, dan sertifikat TIDAK diubah.
+Save lama tetap kompatibel selama URL domain dan path tetap sama.
+
+PENTING:
+- Jangan hapus / ganti repository lama jika hendak mempertahankan save lokal.
+- Progres tersimpan masing-masing di browser; tidak otomatis tersinkron antar HP/PC.
+- Tidak perlu hosting berbayar atau domain tambahan untuk GitHub Pages.
+- Selengkapnya: di ZIP Proyek Lengkap ada docs/UPDATE_HP_PC.md
