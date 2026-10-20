@@ -1,0 +1,24 @@
+✔ 20 quest menghasilkan seluruh ledger dan angka fixture, termasuk audit tiap hari (3.644782ms)
+✔ Semua jawaban fixture benar; jawaban salah tidak mengubah ekonomi (5.418509ms)
+✔ Quest tidak bisa dilompati / diselesaikan sebelum diterima (0.306551ms)
+✔ Klik ganda, replay transaction, dan pembukaan laporan idempoten pada semua quest (3.376989ms)
+✔ Refresh Q7/Q13/Q19 dan semua boundary identik, dapat melanjutkan hingga ending (13.916411ms)
+✔ Autosave menulis satu snapshot atomik yang valid (0.354193ms)
+✔ Q19 dua transaksi diterapkan atomik, satu penjualan + satu biaya (0.999994ms)
+✔ Rollback transaksi stok kurang, kas kurang, negatif, diskon invalid (0.395625ms)
+✔ Save rusak, versi salah, saldo/manipulasi ledger/quest ditolak (2.275688ms)
+✔ Nominal rupiah integer: menerima titik ribuan dan minus; menolak kosong/desimal/garbage (0.697359ms)
+✔ Paket runtime memuat 20 data quest persis sumber (0.333131ms)
+✔ Seluruh import / asset relatif ada; runtime tidak bergantung CDN atau localhost (4.437054ms)
+✔ DOM: menu, tutorial, semua 20 form, retry, arsip, diskon, reload, sertifikat (519.803711ms)
+✔ Spawn aman; dinding/furnitur tidak boleh menjadi posisi save (1.354227ms)
+✔ Semua 6 objek kerja dapat dicapai dari lobi tanpa melintasi collider (BFS 8 px) (26.524965ms)
+✔ Seluruh 20 quest memiliki target objek dunia yang sah (0.378049ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 915.076392
