@@ -1,8 +1,17 @@
-# Secretary Quest — Office Adventure · Tycoon HD 2D
+# Secretary Quest — Office Adventure · Tycoon HD 2D (HP + PC)
 
 Game single-player Bahasa Indonesia untuk SMP kelas 7–9. HTML/CSS/JavaScript ES Modules + Phaser **3.90.0**, tanpa database, akun, backend, CDN saat bermain, atau build wajib.
 
-**Status pengiriman:** implementasi 20 quest lengkap; **16 tes Node/DOM lulus**. Pengujian Chromium grafis, FPS, hasil cetak nyata, dan hosting HTTPS **belum dijalankan** karena kontrol browser yang didukung lingkungan pengerjaan tidak tersedia. GitHub belum terhubung. Paket ini belum diklaim terbit atau lulus semua acceptance test browser. Detail: `docs/HASIL_TES.md`.
+**Status pengujian versi 1.2.0:** Semua 20 quest telah berhasil dijalankan di Chromium dalam simulasi layar sentuh 390×844, dengan kas akhir Rp575.600, 1.000 EXP, ledger 15 transaksi, dan sertifikat. Uji layout dan joystick juga dilakukan pada 320×568, 360×640, dan 844×390 (landscape), serta WASD/arrow di PC. Tidak ditemukan browser error dalam simulasi tersebut. Pengujian ini tidak sama dengan pengujian langsung di perangkat fisik atau hosting GitHub. Tes Node yang terpasang lulus 15/16; tes DOM membutuhkan dependency `jsdom` (tanpa instalasi tes tersebut di-skip).
+
+## Pembaruan kontrol HP + PC 1.2.0
+
+- **HP / tablet sentuh:** analog virtual 360° di kiri bawah, besar, halus dan proporsional; tekan **AKSI** di kanan untuk bicara dengan NPC / objek saat dekat.
+- Tombol cepat **Peta, Misi, Kas, Zoom**, misi ringkas bisa diperluas, menu dan suara tetap bisa diakses dari header.
+- Kamera otomatis mengikuti ukuran HP portrait / landscape, gambar viewport mengisi layar tanpa area kosong besar. Zoom bisa diubah manual dan kembali menyesuaikan saat orientasi berubah.
+- Modal tugas scrollable, field dapat diketik dengan keyboard HP, dan tombol arsip bisa diketuk (tidak memaksa drag-and-drop).
+- **PC:** WASD, panah, E/Spasi, M, J, Escape tetap berfungsi; kontrol layar sentuh tersembunyi. Peta, progress, dekorasi, autosave, sertifikat, dan semua 20 tugas tetap sama.
+- Save lokal lama dan URL repository tidak diganti; gunakan origin GitHub Pages yang sama. Pergantian perangkat tetap memerlukan ekspor/impor save.
 
 ## Pembaruan visual 1.1.0
 
@@ -36,7 +45,8 @@ npm start
 
 ## Cara bermain
 
-- **WASD / panah**: jalan; **E / Spasi**: interaksi dari jarak maksimal 64 px.
+- **PC:** **WASD / panah**: jalan; **E / Spasi**: interaksi dari jarak maksimal 64 px.
+- **HP:** geser **analog kiri** untuk jalan dan tekan **AKSI** di kanan untuk interaksi; tombol kecil bawah untuk **Peta / Misi / Kas / Zoom**. Di sisi kanan atas, ketuk ikon panah pada kartu misi untuk memperluas penjelasan.
 - Klik objek hanya bekerja saat karakter sudah dekat. Tidak ada teleport dalam menu pemain.
 - **M**: peta; **J**: buku misi; **Esc**: tutup panel; **Enter**: lanjut dialog.
 - Panah emas dan teks arah menandai tempat tugas. Peta menampilkan enam ruang yang terhubung lewat lobi.
@@ -113,3 +123,25 @@ Key: `secretaryQuest.v1.save`. Progres hanya di browser/perangkat yang sama; bed
 - Panel panjang: gulir di panel. Tombol tidak perlu dicapai dengan mengubah zoom browser.
 
 Sumber aset dan izin ada di `LICENSE_ASSETS.md`.
+
+## Pembaruan 1.3.0 — Landscape otomatis saat bermain di HP
+
+- Halaman pembuka tetap tegak agar mudah memilih pemain dan membaca pengantar. Saat mengetuk **Ayo masuk kantor**, **Lanjutkan**, atau **Kembali ke Kantor**, game mencoba layar penuh sekaligus mengunci landscape lewat API browser. Tidak mengubah tampilan PC.
+- Bila browser tidak mengizinkan rotasi (misalnya Safari iPhone, beberapa in-app browser, atau fullscreen ditolak), muncul petunjuk memutar HP secara manual. Pemain tetap bisa memilih **Tetap main portrait**.
+- Tombol **⛶ Mode landscape** ada di **Menu → Panduan & pengaturan** untuk mencoba lagi; tersedia juga tombol **Keluar layar penuh**. Matikan kunci rotasi HP jika perlu.
+- Semua quest, ledger, kontrol analog, dan penyimpanan tetap sesuai versi sebelumnya.
+- Keterbatasan: website tidak dapat menjamin rotasi otomatis di semua sistem/browser hanya dengan HTML/CSS/JS. Pembatasan itu ditetapkan browser dan sistem operasi, bukan GitHub Pages.
+
+
+## v1.4.0 — Perbaikan joystick HP dan landscape fallback
+
+- Jalur Touch Events Android/iOS serta Pointer Events (cadangan) dengan drag global, multi-touch, dan reset input saat jari dilepas.
+- Ketuk **Ayo masuk kantor** atau **Lanjutkan** untuk mencoba fullscreen dan orientation.lock('landscape').
+- Jika browser menolak, halaman game diputar 90° lewat CSS; **putar HP fisik ke samping** untuk membacanya. Popup memberi opsi Mengerti, coba otomatis kembali, atau Main portrait. Ini bukan kemampuan memutar OS secara paksa.
+- Mode CSS memaksa Phaser menghitung ukuran kanvas dari clientWidth/clientHeight, mencegah dunia terpotong ketika layar diputar via transform.
+- Di PC tetap WASD / panah / E dan tidak ikut berputar. Seluruh 20 quest serta ledger tidak diubah.
+- Pastikan file baru `src/touch-controls.js` ikut diunggah. URL dengan `?v=140` bisa dipakai untuk membantu melewati cache HTML.
+
+### Periksa versi terpasang
+
+Lihat label `v1.4` kecil di kaki halaman game, termasuk setelah save tersimpan. Jika tidak terlihat, unggahan GitHub belum terpasang atau browser masih memuat versi lama.

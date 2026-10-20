@@ -1,4 +1,4 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#235A63"><meta name="description" content="Petualangan sekretaris: jelajahi Kantor Pelangi dan selesaikan 20 misi akuntansi."><title>Secretary Quest — Kantor Pelangi</title><link rel="icon" href="assets/icon.svg"><link rel="stylesheet" href="style.css?v=1.3.0"></head><body>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#235A63"><meta name="description" content="Petualangan sekretaris: jelajahi Kantor Pelangi dan selesaikan 20 misi akuntansi."><title>Secretary Quest — Kantor Pelangi</title><link rel="icon" href="assets/icon.svg"><link rel="stylesheet" href="style.css?v=1.4.0"></head><body>
 <div id="app"><header><a class="brand" href="#" aria-label="Menu utama"><span class="brand-icon">▦</span><span>SECRETARY<span class="brand-bottom">QUEST <i>OFFICE ADVENTURE</i></span></span></a><div id="hud"><span id="day">HARI 1 <small>/ 5</small></span><span id="rank">Anak Magang<progress id="xp" max="200" value="0"></progress></span><span class="cash"><small>KAS PERUSAHAAN</small><b id="cash">Rp0</b></span></div><nav><button id="sound" title="Suara">♪</button><button id="menu">☰ Menu</button></nav></header>
 <main><div id="game" aria-label="Dunia kantor. Gunakan WASD atau panah untuk bergerak."></div><aside id="quest-card" class="collapsed"><button type="button" id="quest-toggle" aria-label="Perluas detail misi" aria-controls="quest-detail" aria-expanded="false">▾</button><span class="eyebrow" id="quest-day">PESAN DARI PAK BUDI</span><h2 id="quest-title">Selamat datang!</h2><div id="quest-detail"><p id="quest-place">Mulai petualanganmu di Kantor Pelangi.</p><p id="quest-route" class="route"></p><button id="journal">Buku misi <kbd>J</kbd></button></div></aside><div id="zone">KANTOR PELANGI <span>• Lobi</span></div><div id="interaction" hidden></div><div id="toast" role="status" hidden></div><div id="controls"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Jalan</span><span><kbd>E</kbd> Interaksi</span><button id="map">Peta <kbd>M</kbd></button><button id="book">Catatan</button><button id="zoom" title="Ubah ukuran tampilan kantor">Zoom 150%</button></div><div id="touch" aria-label="Kontrol permainan layar sentuh">
   <div id="joystick-area">
@@ -14,17 +14,18 @@
       <button type="button" id="touch-zoom" aria-label="Ubah zoom kamera">⌕ <span>Zoom</span></button>
     </div>
   </div>
-</div></main><footer><span>✦ Belajar dari setiap langkah.</span><span id="save-status">Single-player · Simpan di perangkat ini</span></footer></div>
+</div></main><footer><span>✦ Belajar dari setiap langkah.</span><span id="save-status">Single-player · Simpan di perangkat ini</span><span id="build-version">v1.4</span></footer></div>
 <section id="rotate-hint" role="dialog" aria-modal="true" aria-labelledby="rotate-title" hidden>
   <div class="rotate-panel">
     <div class="rotate-phone" aria-hidden="true">▯ <span>↻</span></div>
-    <h2 id="rotate-title">Putar HP ke samping</h2>
-    <p>Game lebih luas dalam tampilan <strong>landscape</strong>. Browser HP ini belum bisa memutar layar otomatis. Matikan kunci rotasi HP bila perlu.</p>
+    <h2 id="rotate-title">Mode landscape siap</h2>
+    <p>Browser ini menolak rotasi otomatis. Game sudah memutar tampilannya menjadi <strong>horizontal</strong>. Sekarang putar HP secara fisik ke samping untuk bermain dengan layar lebih luas.</p>
     <div class="rotate-actions">
-      <button type="button" id="rotate-retry" class="primary">⛶ Coba landscape</button>
+      <button type="button" id="rotate-okay" class="primary">Mengerti, mulai main</button>
+      <button type="button" id="rotate-retry">Coba rotasi otomatis</button>
       <button type="button" id="rotate-skip">Tetap main portrait</button>
     </div>
   </div>
 </section>
 <div id="overlay" hidden><section id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title"><button id="close" aria-label="Tutup panel">×</button><div id="panel-content"></div></section></div><div id="print-area"></div>
-<script src="vendor/phaser-3.90.0.min.js"></script><script type="module" src="src/main.js?v=1.3.0"></script></body></html>
+<script src="vendor/phaser-3.90.0.min.js"></script><script type="module" src="src/main.js?v=1.4.0"></script></body></html>

@@ -1,63 +1,75 @@
 /**
- * Fitur opsional fullscreen + landscape khusus HP.
- * Hanya memanggil fullscreen dalam event klik pengguna (syarat browser).
- * Tidak ada pembatas quest/fitur ketika API diblokir; layar dapat diputar manual.
+ * Fullscreen + landscape Android Chrome dengan fallback rotasi CSS 90 derajat.
+ * API Web Orientation hanya boleh dijalankan lewat klik + umumnya fullscreen.
+ * Jika browser menolak, paksa layout horizontal agar tetap bisa dimainkan.
  */
-export function initLandscapeMode({
-  win=window,
-  doc=document,
-  screenObj=screen,
-  find=selector=>doc.querySelector(selector),
-  delay=(fn,ms)=>setTimeout(fn,ms)
-}={}){
-  let wantsLandscape=false, allowsPortrait=false, requestToken=0;
-  const phoneGame=()=>win.matchMedia('(pointer:coarse) and (max-width:1100px)').matches;
-  const sideways=()=>win.matchMedia('(orientation:landscape)').matches;
-  const hint=find('#rotate-hint');
-  const retry=find('#rotate-retry');
-  const skip=find('#rotate-skip');
-
+export function initLandscapeMode({win=window,doc=document,screenObj=screen,
+    find=selector=>doc.querySelector(selector),delay=(fn,ms)=>setTimeout(fn,ms)}={}){
+  const root=doc.documentElement,hint=find('#rotate-hint'),retry=find('#rotate-retry'),skip=find('#rotate-skip'),okay=find('#rotate-okay');
+  let requestToken=0,wants=false,portraitAllowed=false,fullscreenWasActive=false,dismissed=false;
+  const refreshCanvas=()=>win.dispatchEvent?.(new Event('secretary-layout'));
+  const coarse=()=>win.matchMedia('(pointer:coarse)').matches || win.matchMedia('(any-pointer:coarse)').matches;
+  const isPhone=()=>coarse()&&Math.min(win.innerWidth,win.innerHeight)<750;
+  const isPortrait=()=>win.matchMedia('(orientation:portrait)').matches;
+  const forced=()=>root.classList.contains('force-landscape');
+  function hideHint(){if(hint)hint.hidden=true;}
+  function useCssLandscape(){
+    if(!wants||portraitAllowed||!isPhone()||!isPortrait()){root.classList.remove('force-landscape');hideHint();return;}
+    const wasForced=forced();
+    root.classList.add('force-landscape');
+    if(!wasForced)refreshCanvas();
+    if(hint&&!dismissed){hint.hidden=false;hint.dataset.reason='forced';}
+  }
   function update(){
-    if(!hint)return;
-    hint.hidden=!wantsLandscape||allowsPortrait||!phoneGame()||sideways();
+    // Jangan putar halaman 90° jika sistem sudah landscape secara asli.
+    if(!isPortrait()||!isPhone()){const wasForced=forced();root.classList.remove('force-landscape');hideHint();if(wasForced)refreshCanvas();}
+    else if(wants&&!portraitAllowed&&forced()) { /* pertahankan fallback */ }
   }
   function enter(){
-    if(!phoneGame())return;
-    wantsLandscape=true;allowsPortrait=false;
-    const token=++requestToken;
-    // Jangan await lebih dulu: fullscreen wajib diminta dari ketukan langsung.
-    let pending;
+    if(!isPhone())return;
+    wants=true;portraitAllowed=false;dismissed=false;const token=++requestToken;
+    if(!isPortrait()){const wasForced=forced();root.classList.remove('force-landscape');hideHint();if(wasForced)refreshCanvas();return;}
+    let fullscreenPromise;
     try{
-      pending=doc.fullscreenElement ? Promise.resolve() :
-        (doc.documentElement.requestFullscreen ? doc.documentElement.requestFullscreen() : Promise.reject(new Error('Fullscreen tidak didukung')));
-    }catch(e){pending=Promise.reject(e);}
-    Promise.resolve(pending).then(()=>{
-      // Chrome Android umumnya mengizinkan orientation.lock setelah fullscreen.
-      if(screenObj.orientation && typeof screenObj.orientation.lock==='function'){
-        return screenObj.orientation.lock('landscape');
-      }
-    }).catch(()=>{ /* Safari/iOS dan beberapa browser membatasi API. */ })
-      .finally(()=>{
+      fullscreenPromise=doc.fullscreenElement ? Promise.resolve() :
+        doc.documentElement.requestFullscreen ? doc.documentElement.requestFullscreen({navigationUI:'hide'}) : Promise.reject(Error('no fullscreen'));
+    }catch(err){fullscreenPromise=Promise.reject(err);}
+    Promise.resolve(fullscreenPromise).then(()=>{
+      if(doc.fullscreenElement)fullscreenWasActive=true;
+      if(screenObj.orientation?.lock)return screenObj.orientation.lock('landscape');
+      throw Error('no orientation lock');
+    }).catch(()=>{
+      // Fallback yang benar-benar landscape secara visual, walau bukan rotasi OS.
+      if(token===requestToken)useCssLandscape();
+    }).then(()=>{
+      if(token!==requestToken)return;
+      // Beberapa browser resolve() tapi tampilan tetap portrait: deteksi ulang.
+      delay(()=>{
         if(token!==requestToken)return;
-        delay(()=>{if(token===requestToken)update();},300);
-      });
+        if(isPortrait())useCssLandscape();else update();
+      },500);
+    });
   }
-  win.addEventListener('resize',update);
-  win.addEventListener('orientationchange',update);
-  doc.addEventListener('fullscreenchange',()=>{
-    if(!doc.fullscreenElement){wantsLandscape=false;allowsPortrait=true;}
-    update();
-  });
-  if(skip)skip.onclick=()=>{allowsPortrait=true;update();};
-  if(retry)retry.onclick=()=>{allowsPortrait=false;enter();};
   function exit(){
-    wantsLandscape=false;allowsPortrait=true;
+    ++requestToken;wants=false;portraitAllowed=true;
+    const wasForced=forced();root.classList.remove('force-landscape');hideHint();if(wasForced)refreshCanvas();
     try{screenObj.orientation?.unlock?.();}catch{}
-    if(doc.fullscreenElement && typeof doc.exitFullscreen==='function'){
-      // Tombol keluar: tetap bisa bermain setelah kembali dari fullscreen.
+    if(doc.fullscreenElement&&doc.exitFullscreen){
       try{Promise.resolve(doc.exitFullscreen()).catch(()=>{});}catch{}
     }
-    update();
   }
-  return {enter,exit};
+  const continueForced=()=>{dismissed=true;hideHint();};
+  if(okay)okay.onclick=continueForced;
+  if(skip)skip.onclick=()=>{portraitAllowed=true;dismissed=true;const wasForced=forced();root.classList.remove('force-landscape');hideHint();if(wasForced)refreshCanvas();};
+  if(retry)retry.onclick=()=>{hideHint();enter();};
+  win.addEventListener('orientationchange',update);win.addEventListener('resize',update);
+  doc.addEventListener('fullscreenchange',()=>{
+    if(doc.fullscreenElement)fullscreenWasActive=true;
+    else if(fullscreenWasActive){
+      fullscreenWasActive=false;
+      // Keluar fullscreen via tombol kembali tidak memblok game.
+      if(wants&&!portraitAllowed&&isPortrait())useCssLandscape();
+    }
+  });
+  return {enter,exit,isForced:forced};
 }

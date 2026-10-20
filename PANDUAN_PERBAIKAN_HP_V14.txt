@@ -1,0 +1,18 @@
+SECRETARY QUEST v1.4.0 — KONTROL HP + LANDSCAPE
+
+CARA UPLOAD KE GITHUB PAGES
+1. Ekstrak ZIP terlebih dahulu.
+2. Buka repository yang sama: github.com/reyybrann/secretary-quest
+3. Pilih Add file → Upload files, unggah SELURUH ISI hasil ekstrak.
+4. Commit changes; tunggu deployment GitHub Pages sukses.
+5. Buka https://reyybrann.github.io/secretary-quest/?v=140 di Chrome HP.
+6. Cari teks v1.4 di bagian bawah halaman untuk memastikan file baru sudah tampil.
+
+PENTING
+- Pastikan src/touch-controls.js dan src/screen-mode.js ikut diunggah.
+- Joystick sekarang memakai Touch Events + Pointer Events fallback.
+- Browser Chrome Android mencoba fullscreen + orientation lock dari tombol masuk.
+- Jika ditolak, game memutar layout 90 derajat; putar HP fisik ke samping.
+- Tombol Tetap main portrait mengembalikan posisi tegak.
+- Browser iOS/Android tertentu tidak menyediakan rotasi OS otomatis untuk web biasa.
+- PC tetap menggunakan WASD, arah, E, Spasi, dan semua fitur ekonomi/misi tetap.
