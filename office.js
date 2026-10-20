@@ -1,6 +1,6 @@
-import {makeArt} from './art.js';
-import {WIDTH,HEIGHT,ROOMS,OBJECTS,FURNITURE,BLOCKS,SPAWN,safePosition,target} from './world.js';
-import {quest} from './engine.js';
+import {makeArt} from './art.js?v=1.5.0';
+import {WIDTH,HEIGHT,ROOMS,OBJECTS,FURNITURE,BLOCKS,SPAWN,safePosition,target} from './world.js?v=1.5.0';
+import {quest} from './engine.js?v=1.5.0';
 export function createOffice(app){return class OfficeScene extends Phaser.Scene{
 constructor(){super('Office');this.direction=0;this.lastSave=0;this.touch={};this.touchAnalog={x:0,y:0};this.manualZoom=false;}
 create(){makeArt(this);app.scene=this;this.add.image(0,0,'office-floor').setOrigin(0).setDepth(-10);

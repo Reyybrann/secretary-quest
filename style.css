@@ -92,7 +92,7 @@
 /* Prioritas selector: tombol ringkas misi tidak menimpa judul kartu. */
 @media (pointer:coarse) and (max-width:1100px){
  #quest-card #quest-toggle{width:30px;height:32px;min-height:32px;padding:0;font-size:20px}
- #joystick-knob{position:absolute;left:50%;top:50%;translate:-50% -50%}
+ #joystick-knob{position:absolute;left:50%;top:50%;translate:none}
 }
 
 /* Area aman untuk HP berponi dan gestur navigasi iPhone. */
@@ -146,3 +146,10 @@
 
 #build-version{font-size:10px;white-space:nowrap;color:#43656a;font-weight:700}
 @media(pointer:coarse) and (max-width:1100px){#build-version{font-size:9px}}
+
+/* v1.5 Stable viewport: prevent scroll-gesture interruption of analog. */
+#game{contain:layout paint;touch-action:none}
+#joystick-area,#joystick,#touch-actions{overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#joystick{pointer-events:auto!important}
+#joystick-knob{left:50%;top:50%;translate:none!important}
+@media (pointer:coarse) and (max-width:1100px){body{overscroll-behavior:none}}

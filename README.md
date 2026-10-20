@@ -1,3 +1,5 @@
+> **UPDATE v1.5 FINAL:** perbaikan kanvas Phaser blank/resize berulang, joystick sentuh, dan konsistensi berkas GitHub Pages. Lihat `PANDUAN_UPLOAD_GITHUB.txt` dan `cek.html`.
+
 # Secretary Quest — Office Adventure · Tycoon HD 2D (HP + PC)
 
 Game single-player Bahasa Indonesia untuk SMP kelas 7–9. HTML/CSS/JavaScript ES Modules + Phaser **3.90.0**, tanpa database, akun, backend, CDN saat bermain, atau build wajib.

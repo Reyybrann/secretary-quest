@@ -1,16 +1,19 @@
-CARA UPDATE SECRETARY QUEST V1.4.0 (GITHUB PAGES)
+PANDUAN UPLOAD SEKRETARIS QUEST v1.5 FINAL
 
-1. Simpan save lama: jika diperlukan pilih Menu → Panduan & pengaturan → Ekspor Save.
-2. Ekstrak Secretary_Quest_V1_4_FIX_HP_GITHUB.zip.
-3. Buka github.com/reyybrann/secretary-quest.
-4. Pilih Add file → Upload files.
-5. Unggah SELURUH file dan folder HASIL EKSTRAK, bukan file ZIP atau folder pembungkusnya.
-   Wajib berada di root: index.html, style.css, folder src, folder vendor, folder assets.
-   Folder src wajib memuat touch-controls.js, screen-mode.js, main.js, office.js.
-6. Klik Commit changes. Tunggu GitHub Pages selesai publish.
-7. Buka https://reyybrann.github.io/secretary-quest/?v=140
-8. Pastikan terlihat v1.4 kecil di bagian bawah. Buka tab Samaran bila masih terlihat versi lama.
-9. Di HP: Lanjutkan/Main Baru → Ayo masuk kantor → geser analog.
-10. Jika browser tak memutar landscape secara otomatis, game memutar layout 90 derajat: pilih Mengerti, kemudian putar HP fisik ke samping.
+1. EKSPOR SAVE dari game lama jika perlu (Menu -> Ekspor Save).
+2. Ekstrak file ZIP Github v1.5 FINAL.
+3. Buka https://github.com/reyybrann/secretary-quest (branch yang dipakai GitHub Pages).
+4. Add file -> Upload files, lalu tarik seluruh isi hasil ekstraksi
+   (index.html, style.css, cek.html, src, vendor, assets, .nojekyll, dll.).
+   HARUS mengganti index.html, style.css, src/main.js DAN src/office.js secara bersamaan.
+5. Pastikan tidak ada folder pembungkus baru, index.html di root repositori.
+6. Commit changes. Tunggu Settings -> Pages / Actions -> pages build and deployment sukses.
+7. Cek https://reyybrann.github.io/secretary-quest/cek.html
+   Semua status file harus HIJAU dan tulisan SIAP DIMAINKAN.
+8. Buka https://reyybrann.github.io/secretary-quest/?versi=150
+9. Pastikan tulisan v1.5 FINAL dan peta kantor tampak.
+10. Di laptop emulasi HP: klik tahan dan geser analog.
 
-Untuk PC, kontrol WASD/panah/E tetap dan tidak perlu domain tambahan.
+Jika cek.html menunjukkan merah, publikasi belum lengkap: unggah ulang semua file.
+GitHub Pages tidak menyediakan backend; game tetap single-player via browser.
+Rotasi OS otomatis tidak dapat dijamin di semua browser; gunakan putar HP manual saat fallback.

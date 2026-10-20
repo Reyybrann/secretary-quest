@@ -1,0 +1,27 @@
+SECRETARY QUEST v1.5 — PERBAIKAN MASALAH REKAMAN 20 OKTOBER 2026
+
+MASALAH DITEMUKAN:
+  Video memperlihatkan layar peta kosong dan stack error Phaser.
+  Berkas GitHub versi 1.4 tidak sinkron: index.html versi baru, tapi beberapa JS versi lama/tidak ada.
+
+PERBAIKAN:
+  1. Phaser mode NONE + resize manual terjadwal; tidak lagi memakai Phaser Scale.RESIZE.
+  2. Semua import JS dan CSS memiliki versi 1.5.0 untuk menghindari cache lama.
+  3. Joystick touch + pointer, fullscreen/landscape dengan fallback.
+  4. cek.html untuk memeriksa lengkapnya publikasi.
+
+LANGKAH WAJIB:
+  - Ekstrak ZIP, upload semua FILE dan FOLDER dari DALAMNYA, bukan ZIP.
+  - PASTIKAN REPLACE index.html, style.css dan SELURUH folder src, vendor, assets.
+  - Commit; tunggu deployment Actions → pages build and deployment hingga sukses.
+  - Buka https://reyybrann.github.io/secretary-quest/cek.html
+  - Semua file harus HIJAU; jika tidak hijau, unggah ulang.
+  - Buka https://reyybrann.github.io/secretary-quest/?versi=150
+  - HP: putar HP sesuai instruksi. PC: WASD / panah dan E.
+  - DevTools: mouse pada joystick HARUS diklik, DITAHAN, lalu DIGESER.
+
+PENTING: Chrome Android & iOS TIDAK menjamin Screen Orientation Lock; jika ditolak,
+       game mencoba CSS landscape, tetapi orientasi OS tidak bisa dipaksa pada semua browser.
+       Untuk fullscreen maksimal, Chrome Android rekomendasi Instal Aplikasi dari menu Chrome.
+
+Simpan data game lama: Menu → Ekspor Save SEBELUM menghapus cache lokal.

@@ -1,16 +1,17 @@
-import {DATA} from './data.js';
-import {initial,quest,accept,complete,summary,money,KEY,save,restore,score,parseAmount} from './engine.js';
-import {OBJECTS,ROOMS,target,safePosition,SPAWN} from './world.js';
-import {createOffice} from './office.js?v=1.4.0';
+import {DATA} from './data.js?v=1.5.0';
+import {initial,quest,accept,complete,summary,money,KEY,save,restore,score,parseAmount} from './engine.js?v=1.5.0';
+import {OBJECTS,ROOMS,target,safePosition,SPAWN} from './world.js?v=1.5.0';
+import {createOffice} from './office.js?v=1.5.0';
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels={modal:'Modal awal',total_nota:'Total nota',total:'Total yang diverifikasi',kas:'Kas akhir hari',persediaan:'Nilai persediaan',laba:'Laba / rugi hari ini',omzet:'Omzet hari ini',hpp:'HPP — modal barang terjual',biaya:'Biaya operasional',biaya_iklan:'Biaya iklan',sisa_pulpen:'Sisa pulpen (buah)',sisa_buku:'Sisa buku (buah)',pembayaran:'Pembayaran setelah diskon',diskon_total:'Potongan diskon',penjualan:'Uang penjualan',biaya_kemasan:'Biaya kemasan',laba_total:'Laba seluruh lima hari',kas_akhir:'Kas akhir perusahaan',stok_akhir:'Nilai stok terakhir',status:'Hasil pemeriksaan',arus_kas:'Arah uang',kategori:'Kategori bukti'};
 const titles=['Anak Magang','Staf Baru','Staf Terampil','Sekretaris Andal','Sekretaris Hebat'];
 const days=['Selamat datang di Kantor Pelangi','Toko mulai ramai','Bisnis berkembang','Belajar dari rugi kecil','Ujian terakhir, langkah besar'];
 const mechanics={'input-amount':'Kalkulator modal','invoice-calculation':'Meja pembelian','document-match':'Cocokkan & arsipkan','report-builder':'Susun laporan','cashier-total':'Kasir toko','income-expense-sort':'Pilah arus kas','expense-approval':'Persetujuan pembayaran','stock-count':'Hitung barang','discount-calculator':'Kalkulator promo','receipt-category':'Arsip bukti pembayaran','two-step-transaction':'Dua transaksi, satu pekerjaan','final-report':'Laporan wisuda'};
-import {initLandscapeMode} from './screen-mode.js?v=1.4.0';
-import {createJoystick} from './touch-controls.js?v=1.4.0';
+import {initLandscapeMode} from './screen-mode.js?v=1.5.0';
+import {createJoystick} from './touch-controls.js?v=1.5.0';
 const gameScreen=initLandscapeMode();
 const enterGameScreen=gameScreen.enter;
+// Cek versi dan status melalui /cek.html setelah dipublikasikan.
 
 const app={state:initial(),modal:false,running:false,scene:null,stage:null,corrupt:false,
 persist(){if(!this.running)return;try{save(this.state);$('#save-status').textContent='✓ Progres tersimpan di perangkat ini';}catch(e){$('#save-status').textContent='⚠ Simpan gagal — ekspor progres melalui Menu';}},
@@ -21,7 +22,7 @@ button(id,fn){let e=$('#'+id);if(e)e.onclick=fn;},
 toast(msg){$('#toast').textContent=msg;$('#toast').hidden=false;clearTimeout(this.toastTimer);this.toastTimer=setTimeout(()=>{let el=$('#toast');if(el)el.hidden=true;},3600);},
 beep(){if(!this.state.settings.sound)return;try{let Audio=window.AudioContext||window.webkitAudioContext;this.audio||=new Audio();this.audio.resume();let o=this.audio.createOscillator(),g=this.audio.createGain();o.type='sine';o.frequency.setValueAtTime(523,this.audio.currentTime);o.frequency.setValueAtTime(784,this.audio.currentTime+.1);g.gain.setValueAtTime(.06,this.audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,this.audio.currentTime+.3);o.connect(g).connect(this.audio.destination);o.start();o.stop(this.audio.currentTime+.3);}catch{}},
 confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;let d=document.createElement('div');d.className='confetti';for(let i=0;i<25;i++){let p=document.createElement('i');p.style.cssText=`left:${Math.random()*100}%;background:${['#35a69a','#f3a94f','#fff9eb'][i%3]};animation-delay:${Math.random()*.3}s`;d.append(p);}document.body.append(d);setTimeout(()=>d.remove(),2300);},
-ready(){this.menu();},
+ready(){this.menu();window.dispatchEvent(new Event('secretary-layout'));},
 menu(){let exists=false;try{exists=!!localStorage.getItem(KEY);}catch{};let hero=this.scene.textures.get('person-0-0-0').getSourceImage().toDataURL();this.open(`<span class="eyebrow">KANTOR PELANGI · PETUALANGAN AKUNTANSI</span><div class="intro-grid"><div><h1 id="panel-title" class="intro-title">Langkah kecil.<br><span>Arti besar.</span></h1><p>Jadi sekretaris baru. Jelajahi kantor, bantu Pak Budi, dan buat perusahaan tumbuh!</p><div class="badges"><span>5 hari</span><span>20 misi</span><span>1 petualangan</span></div></div><img class="hero-art" alt="Sekretaris kartun tycoon" src="${hero}"></div><div class="actions"><button class="primary" id="new">Main Baru</button><button id="continue" ${!exists?'disabled':''}>Lanjutkan</button>${this.running?'<button id="resume">Kembali ke Kantor</button>':''}</div><details><summary>Panduan & pengaturan</summary><div class="actions"><button id="help">Cara Bermain</button><button id="export" ${!this.running?'disabled':''}>Ekspor Save</button><button id="import">Impor Save</button></div><div class="actions"><button id="decor" ${!this.running?'disabled':''}>Dekorasi (${this.state.tokens} token)</button><button id="delete" class="danger" ${!exists?'disabled':''}>Hapus Progres</button><button id="screen-mode">⛶ Mode landscape</button><button id="screen-exit">Keluar layar penuh</button><button id="sound-menu">Suara ${this.state.settings.sound?'ON':'OFF'}</button></div><input id="import-file" type="file" accept="application/json,.json" hidden><p class="muted">Single-player, tanpa akun. Progres hanya tersimpan di browser/perangkat ini. Semua uang virtual.</p></details>`);
 this.button('new',()=>{if(exists)this.confirm('Mulai ulang akan mengganti progres pada browser ini. Ekspor save dahulu jika ingin menyimpan arsip.',()=>this.newForm());else this.newForm();});this.button('continue',()=>{enterGameScreen();this.load();});this.button('resume',()=>{enterGameScreen();this.close();});this.button('help',()=>this.help());this.button('export',()=>this.downloadSave());this.button('import',()=>$('#import-file').click());$('#import-file').onchange=e=>this.importSave(e.target.files[0]);this.button('delete',()=>this.confirm('Hapus progres yang tersimpan di browser ini?',()=>this.confirm('Konfirmasi terakhir: progres dan sertifikat di browser ini akan dihapus.',()=>{localStorage.removeItem(KEY);this.running=false;this.state=initial();this.scene.resetPosition();this.render();this.menu();})));this.button('decor',()=>this.decor());this.button('sound-menu',()=>{this.toggleSound();this.menu();});this.button('screen-mode',enterGameScreen);this.button('screen-exit',()=>{gameScreen.exit();this.menu();});},
 confirm(text,yes){this.open(`<span class="eyebrow">KONFIRMASI</span><h1 id="panel-title">Apakah kamu yakin?</h1><p>${esc(text)}</p><div class="actions"><button id="cancel">Batal</button><button class="danger" id="yes">Ya, lanjutkan</button></div>`);this.button('cancel',()=>this.menu());this.button('yes',yes);},
@@ -70,27 +71,38 @@ const touchStick=createJoystick({
 });
 function resetTouchInput(){touchStick.reset();if(app.scene){app.scene.touchAnalog={x:0,y:0};app.scene.touch={};}}
 
-// Phaser RESIZE biasanya memakai getBoundingClientRect(), yang sudah diputar
-// CSS 90° lalu salah membaca ukuran canvas sebagai portrait. Saat mode paksa,
-// ukur lewat clientWidth/clientHeight (ukuran lokal sebelum transform).
+// FINAL: Phaser Scale.RESIZE tidak digunakan. Pada beberapa Android/Edge
+// event resize Phaser RESIZE -> refresh -> resize membentuk rekursi dan
+// menyebabkan kanvas kosong. Kita ukur parent stabil, lalu scale.resize
+// hanya ketika dimensinya BENAR-BENAR berubah. Tidak pernah memanggil refresh.
+let pendingGameResize=false;
 function resizeGameForPhone(){
-  if(!app.scene)return;
-  const scale=app.scene.scale;
-  const forced=document.documentElement.classList.contains('force-landscape');
-  if(forced){
-    scale.scaleMode=Phaser.Scale.NONE;
-    const viewport=$('#game');
-    scale.resize(viewport.clientWidth,viewport.clientHeight);
-  }else{
-    scale.scaleMode=Phaser.Scale.RESIZE;
-    scale.refresh();
-  }
-  app.scene.applyResponsiveZoom();
+  if(pendingGameResize)return;
+  pendingGameResize=true;
+  requestAnimationFrame(()=>{
+    pendingGameResize=false;
+    if(!app.scene)return;
+    const box=$('#game');
+    const w=Math.round(box.clientWidth),h=Math.round(box.clientHeight);
+    if(!w||!h)return;
+    const scale=app.scene.scale;
+    if(scale.gameSize.width!==w||scale.gameSize.height!==h){
+      scale.resize(w,h);
+    }
+    app.scene.applyResponsiveZoom();
+  });
 }
-window.addEventListener('secretary-layout',()=>requestAnimationFrame(resizeGameForPhone));
+window.addEventListener('secretary-layout',resizeGameForPhone);
+window.addEventListener('resize',resizeGameForPhone);
+// ResizeObserver hanya mengamati kontainer (bukan canvas), untuk DevTools,
+// portrait/landscape native, address bar HP, dan rotasi CSS 90°.
+if(window.ResizeObserver){
+  const gameSizeObserver=new ResizeObserver(resizeGameForPhone);
+  gameSizeObserver.observe($('#game'));
+}
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();app.close();}if(e.key==='Enter'&&app.modal&&!['INPUT','BUTTON','SELECT','TEXTAREA'].includes(document.activeElement?.tagName)){let b=$('#dialog-next, #success-next, #go');if(b){e.preventDefault();b.click();}}if(e.key==='Tab'&&app.modal){let focusables=[...$('#panel').querySelectorAll('button:not(:disabled),input:not([hidden]),summary')].filter(el=>el.getClientRects().length);let first=focusables[0],last=focusables.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}});
 window.addEventListener('blur',()=>{app.scene?.input.keyboard.resetKeys();resetTouchInput();app.persist();});document.addEventListener('visibilitychange',()=>{if(document.hidden)resetTouchInput();});window.addEventListener('pagehide',()=>app.persist());
-if(!window.Phaser){$('#overlay').hidden=false;$('#panel-content').innerHTML='<h1>Game belum dapat dimuat</h1><p>Berkas vendor/phaser-3.90.0.min.js belum tersedia. Pastikan seluruh folder proyek diunggah bersama index.html.</p>';}else {new Phaser.Game({type:Phaser.AUTO,parent:'game',backgroundColor:'#e1d8b8',pixelArt:false,roundPixels:true,scale:{mode:Phaser.Scale.RESIZE,autoCenter:Phaser.Scale.CENTER_BOTH},physics:{default:'arcade',arcade:{debug:false}},scene:[createOffice(app)],audio:{noAudio:true},render:{antialias:true},fps:{target:60,forceSetTimeOut:false}});app.render();}
+if(!window.Phaser){$('#overlay').hidden=false;$('#panel-content').innerHTML='<h1>Game belum dapat dimuat</h1><p>Berkas vendor/phaser-3.90.0.min.js belum tersedia. Pastikan seluruh folder proyek diunggah bersama index.html.</p>';}else {new Phaser.Game({type:Phaser.AUTO,parent:'game',backgroundColor:'#e1d8b8',pixelArt:false,roundPixels:true,scale:{mode:Phaser.Scale.NONE,width:960,height:540,autoCenter:Phaser.Scale.NO_CENTER},physics:{default:'arcade',arcade:{debug:false}},scene:[createOffice(app)],audio:{noAudio:true},render:{antialias:true},fps:{target:60,forceSetTimeOut:false}});app.render();}
 
 export {app};
