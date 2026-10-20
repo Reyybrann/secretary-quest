@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./tests',testMatch:'e2e.spec.js',timeout:90000,fullyParallel:false,reporter:[['list'],['html',{open:'never'}]],use:{baseURL:'http://127.0.0.1:8080',browserName:'chromium',trace:'retain-on-failure'},webServer:{command:'node tools/serve.mjs',url:'http://127.0.0.1:8080',reuseExistingServer:!process.env.CI},projects:[{name:'1280x720',use:{viewport:{width:1280,height:720}}},{name:'1366x768',use:{viewport:{width:1366,height:768}}}]});
