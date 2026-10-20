@@ -1,4 +1,4 @@
-import {DATA} from './data.js';
+import {DATA} from './data.js?v=1.5.0';
 export const KEY='secretaryQuest.v1.save';
 export const money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
 export const clone=o=>JSON.parse(JSON.stringify(o));

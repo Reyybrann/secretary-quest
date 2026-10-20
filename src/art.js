@@ -1,6 +1,6 @@
 // Original lightweight tycoon artwork. Curves, gradients and shadows are baked
 // into small Canvas textures ONCE at boot; animation only swaps these textures.
-import {WIDTH,HEIGHT,ROOMS,BLOCKS} from './world.js';
+import {WIDTH,HEIGHT,ROOMS,BLOCKS} from './world.js?v=1.5.0';
 const ink='#354b52';
 function rounded(c,x,y,w,h,r,fill,stroke=ink,lw=1.6){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();c.fillStyle=fill;c.fill();if(stroke){c.lineWidth=lw;c.strokeStyle=stroke;c.stroke();}}
 function ellipse(c,x,y,rx,ry,fill,stroke=null,lw=1.5){c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fillStyle=fill;c.fill();if(stroke){c.lineWidth=lw;c.strokeStyle=stroke;c.stroke();}}
