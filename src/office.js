@@ -1,6 +1,6 @@
-import {makeArt} from './art.js?v=1.5.0';
-import {WIDTH,HEIGHT,ROOMS,OBJECTS,FURNITURE,BLOCKS,SPAWN,safePosition,target} from './world.js?v=1.5.0';
-import {quest} from './engine.js?v=1.5.0';
+import {makeArt} from './art.js?v=1.6.0';
+import {WIDTH,HEIGHT,ROOMS,OBJECTS,FURNITURE,BLOCKS,SPAWN,safePosition,target} from './world.js?v=1.6.0';
+import {quest} from './engine.js?v=1.6.0';
 export function createOffice(app){return class OfficeScene extends Phaser.Scene{
 constructor(){super('Office');this.direction=0;this.lastSave=0;this.touch={};this.touchAnalog={x:0,y:0};this.manualZoom=false;}
 create(){makeArt(this);app.scene=this;this.add.image(0,0,'office-floor').setOrigin(0).setDepth(-10);
@@ -11,7 +11,7 @@ this.customers=[this.add.image(304,720,'person-1-2-0').setScale(.5).setDepth(720
 this.decorPlant=this.add.image(720,304,'plant').setScale(.5).setDepth(304).setVisible(false);this.decorRug=this.add.rectangle(656,336,120,48,0xe1a96d).setStrokeStyle(3,0xf8dda3).setDepth(0).setVisible(false);
 let p=safePosition(app.state.position)?app.state.position:SPAWN;this.player=this.physics.add.sprite(p.x,p.y,'person-0-0-0').setScale(.5).setOrigin(.5,5/6);this.player.body.setSize(40,28).setOffset(12,64);this.player.setCollideWorldBounds(true);this.physics.world.setBounds(32,32,1280,896);this.physics.add.collider(this.player,this.solids);this.cameras.main.setBounds(0,0,WIDTH,HEIGHT);this.cameras.main.startFollow(this.player,true,.15,.15);this.cameras.main.setRoundPixels(true);this.applyResponsiveZoom();this.scale.on('resize',()=>this.applyResponsiveZoom());
 this.keys=this.input.keyboard.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT');this.input.keyboard.on('keydown',e=>{if(app.modal)return;if(['KeyE','Space'].includes(e.code)){e.preventDefault();this.interact();}if(e.code==='KeyM')app.showMap();if(e.code==='KeyJ')app.showJournal();});
-this.input.on('pointerdown',p=>{if(app.modal||!app.running)return;let o=OBJECTS.find(o=>Math.hypot(o.x-p.worldX,o.y-p.worldY)<36);if(o){if(Math.hypot(o.x-this.player.x,o.y-this.player.y)<=64)app.interact(o.id);else app.toast('Dekati objek terlebih dahulu, lalu tekan E.');}});
+this.input.on('pointerdown',p=>{if(app.modal||!app.running)return;let o=OBJECTS.find(o=>Math.hypot(o.x-p.worldX,o.y-p.worldY)<36);if(o){if(Math.hypot(o.x-this.player.x,o.y-this.player.y)<=64)app.interact(o.id);else app.toast('Dekati objek terlebih dahulu, lalu tekan E (PC) atau AKSI (HP).');}});
 this.marker=this.add.text(0,0,'▼',{fontFamily:'Arial',fontSize:'27px',color:'#f3a94f',stroke:'#7e5b38',strokeThickness:2}).setOrigin(.5).setDepth(2000);app.ready();}
 applyResponsiveZoom(){
  const cam=this.cameras.main;

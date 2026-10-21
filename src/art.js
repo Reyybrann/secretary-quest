@@ -1,6 +1,6 @@
 // Original lightweight tycoon artwork. Curves, gradients and shadows are baked
 // into small Canvas textures ONCE at boot; animation only swaps these textures.
-import {WIDTH,HEIGHT,ROOMS,BLOCKS} from './world.js?v=1.5.0';
+import {WIDTH,HEIGHT,ROOMS,BLOCKS} from './world.js?v=1.6.0';
 const ink='#354b52';
 function rounded(c,x,y,w,h,r,fill,stroke=ink,lw=1.6){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();c.fillStyle=fill;c.fill();if(stroke){c.lineWidth=lw;c.strokeStyle=stroke;c.stroke();}}
 function ellipse(c,x,y,rx,ry,fill,stroke=null,lw=1.5){c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fillStyle=fill;c.fill();if(stroke){c.lineWidth=lw;c.strokeStyle=stroke;c.stroke();}}
@@ -64,6 +64,6 @@ export function makeArt(scene){
    }
    for(let r of BLOCKS.slice(0,20)){c.fillStyle='#1e354426';c.fillRect(r.x+3,r.y+r.h,r.w,8);c.fillStyle='#35636b';c.fillRect(r.x,r.y,r.w,r.h);c.fillStyle='#60908e';c.fillRect(r.x,r.y,r.w,Math.min(5,r.h));c.fillStyle='#b4c8a366';c.fillRect(r.x,r.y,r.w,1);}
    for(let r of ROOMS){let y=r.y===32?412:528;rounded(c,r.door-47,y,94,19,3,'#b79f79','#9d8f71',1);rounded(c,r.door-35,y+4,70,10,2,'#e7d3a5',null);}
-   rounded(c,472,450,368,43,12,'#f8f3db','#abbba7',1.5);c.font='bold 16px Arial';c.textAlign='center';c.fillStyle='#527b74';c.fillText('K A N T O R   P E L A N G I',656,478);
+   rounded(c,472,450,368,43,12,'#f8f3db','#abbba7',1.5);c.font='bold 16px Arial';c.textAlign='center';c.fillStyle='#527b74';c.fillText('U S A H A   S I S W A   P E L A N G I',656,478);
  });
 }
